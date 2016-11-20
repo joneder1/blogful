@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+    Delete Entry
+</h1>
+
+<!-- HTML DELETE form -->
+<form role="form" method="POST">
+    <h3>Delete '{{entry_title}}' entry</h3>
+    <button type="submit" class="btn btn-success">Confirm</button>
+    <a href="/" class="btn btn-danger">Cancel</a>
+</form>
+{% endblock %}
