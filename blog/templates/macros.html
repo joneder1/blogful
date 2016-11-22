@@ -3,17 +3,18 @@
     <div class="col-md-2 text-right metadata">
         <ul class="list-unstyled">
             <li>
-                {{ entry.datetime | dateformat("%d/%m/%y") }}
+                {{ entry.datetime | dateformat("%m/%d/%y") }} 
             </li>
         </ul>
         <a href="/entry/{{entry.id}}/edit" title="edit entry">Edit Entry</a><br>
         <a href="/entry/{{entry.id}}/delete" title="delete entry">Delete Entry</a>
     </div>
     <div class="col-md-10">
-        <h1>
-            {{ entry.title }}
-        </h1>
+        <h3>
+            {{ entry.title }} 
+        </h3>
         {{ entry.content | markdown }}
+        <h4>Author: {{ entry.author.name }}</h4>
     </div>
 </div>
 {% endmacro %}

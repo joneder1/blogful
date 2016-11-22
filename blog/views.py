@@ -5,8 +5,7 @@ from .database import session, Entry
 
 from flask import flash
 from flask import request, redirect, url_for
-from flask.ext.login import login_user
-from flask.ext.login import login_required
+from flask.ext.login import login_user, login_required, logout_user
 from werkzeug.security import check_password_hash
 from .database import User
 
@@ -42,10 +41,13 @@ def entries(page=1):
         total_pages=total_pages
     )
     
+@app.route("/")
 @app.route("/entry/add", methods=["GET"])
 @login_required
 def add_entry_get():
     return render_template("add_entry.html")    
+
+from flask.ext.login import current_user
 
 @app.route("/entry/add", methods=["POST"])
 @login_required
@@ -53,9 +55,10 @@ def add_entry_post():
     entry = Entry(
         title=request.form["title"],
         content=request.form["content"],
+        author=current_user
     )
     session.add(entry)
-    session.commit
+    session.commit()
     return redirect(url_for("entries"))
    
 @app.route("/entry/<int:id>")
@@ -69,6 +72,7 @@ def single_entry(id):
     
 # GET to return existing entry
 @app.route("/entry/<int:id>/edit", methods=["GET"])
+@login_required
 def edit_entry(id):
     entry = session.query(Entry)
     entry = entry.filter(Entry.id == id).first()
@@ -76,6 +80,7 @@ def edit_entry(id):
 
 # POST edited entry
 @app.route("/entry/<int:id>/edit", methods=["POST"])
+@login_required
 def edit_entry_post(id):
     entry = session.query(Entry)
     entry = entry.filter(Entry.id == id).first()
@@ -85,12 +90,14 @@ def edit_entry_post(id):
     return redirect(url_for("entries"))
     
 @app.route("/entry/<int:id>/delete", methods=["GET"])
+@login_required
 def delete_entry(id):
     entry = session.query(Entry)
     entry = entry.filter(Entry.id == id).first()
     return render_template("delete_entry.html", entry_title=entry.title)
 
 @app.route("/entry/<int:id>/delete", methods=["POST"])
+@login_required
 def delete_entry_post(id):
     entry = session.query(Entry)
     entry = entry.filter(Entry.id == id).first()
@@ -113,3 +120,8 @@ def login_post():
 
     login_user(user)
     return redirect(request.args.get('next') or url_for("entries"))
+    
+@app.route("/logout", methods=["GET"])
+def logout_get():
+    logout_user()
+    return redirect(url_for ("login_get"))
