@@ -31,7 +31,7 @@ class TestViews(unittest.TestCase):
                                                kwargs={"port": 8080})
         self.process.start()
         time.sleep(1)
-
+                
     def tearDown(self):
         """ Test teardown """
         # Remove the tables and their data from the database
@@ -75,8 +75,8 @@ class TestViews(unittest.TestCase):
         button = self.browser.find_by_css("button[type=submit]")
         button.click()
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/")
-        #visit the add entry page by clicking on button - why can't it find
-        self.browser.click_link_by_href("/entry/add")
+        #visit the add entry page by clicking on button
+        self.browser.find_by_css("button[name='add']").click()
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/entry/add")
         self.browser.fill("title", "Add Entry Logged In Test Title")
         self.browser.fill("content", "Test content for add entry logged in")

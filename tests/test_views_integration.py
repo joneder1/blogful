@@ -35,7 +35,7 @@ class TestViews(unittest.TestCase):
             http_session["user_id"] = str(self.user.id)
             http_session["_fresh"] = True
 
-    def test_add_entry(self):
+    def test_add_edit_delete_entry(self):
         self.simulate_login()
 
         response = self.client.post("/entry/add", data={
@@ -45,13 +45,39 @@ class TestViews(unittest.TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(urlparse(response.location).path, "/")
+        #should be one entry 
         entries = session.query(Entry).all()
         self.assertEqual(len(entries), 1)
-
+        
+        #checks that title and content appear correctly
         entry = entries[0]
         self.assertEqual(entry.title, "Test Entry")
         self.assertEqual(entry.content, "Test content")
         self.assertEqual(entry.author, self.user)
+        
+        #tests edit entry function
+        response = self.client.post("/entry/1/edit", data={
+            "title": "Editted Test Entry",
+            "content": "Editted Test content"
+        })
+        
+        self.assertEqual(response.status_code, 302)  
+        self.assertEqual(urlparse(response.location).path, "/") 
+        # Test post data
+        entry = session.query(Entry).all() 
+        entry = entries[0]
+        #New title/content after edit
+        self.assertEqual(entry.title, "Editted Test Entry")
+        self.assertEqual(entry.content, "Editted Test content")
+        self.assertEqual(entry.author, self.user)    
+        
+        #deletes the entry
+        response = self.client.post("/entry/1/delete")
+        self.assertEqual(response.status_code, 302)  
+        self.assertEqual(urlparse(response.location).path, "/")  
+        # Should not be any entries left
+        entries = session.query(Entry).all() 
+        self.assertEqual(len(entries), 0)
 
 if __name__ == "__main__":
     unittest.main()
