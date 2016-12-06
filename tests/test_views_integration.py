@@ -24,12 +24,6 @@ class TestViews(unittest.TestCase):
         session.add(self.user)
         session.commit()
 
-    def tearDown(self):
-        """ Test teardown """
-        session.close()
-        # Remove the tables and their data from the database
-        Base.metadata.drop_all(engine)
-
     def simulate_login(self):
         with self.client.session_transaction() as http_session:
             http_session["user_id"] = str(self.user.id)
@@ -57,8 +51,8 @@ class TestViews(unittest.TestCase):
         
         #tests edit entry function
         response = self.client.post("/entry/1/edit", data={
-            "title": "Editted Test Entry",
-            "content": "Editted Test content"
+            "title": "Edited Test Entry",
+            "content": "Edited Test content"
         })
         
         self.assertEqual(response.status_code, 302)  
@@ -67,8 +61,8 @@ class TestViews(unittest.TestCase):
         entry = session.query(Entry).all() 
         entry = entries[0]
         #New title/content after edit
-        self.assertEqual(entry.title, "Editted Test Entry")
-        self.assertEqual(entry.content, "Editted Test content")
+        self.assertEqual(entry.title, "Edited Test Entry")
+        self.assertEqual(entry.content, "Edited Test content")
         self.assertEqual(entry.author, self.user)    
         
         #deletes the entry
@@ -78,6 +72,17 @@ class TestViews(unittest.TestCase):
         # Should not be any entries left
         entries = session.query(Entry).all() 
         self.assertEqual(len(entries), 0)
+        
+    def test_Logout(self):
+        self.simulate_login()
+        response = self.client.get("/logout")
+        self.assertEqual(urlparse(response.location).path, "/login")
+
+    def tearDown(self):
+        """ Test teardown """
+        session.close()
+        # Remove the tables and their data from the database
+        Base.metadata.drop_all(engine)
 
 if __name__ == "__main__":
     unittest.main()
