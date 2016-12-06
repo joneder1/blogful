@@ -49,14 +49,9 @@ class TestViews(unittest.TestCase):
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/login")
         
     def test_logout(self):
-        # Login to blog
         self.test_login_correct()
-        # Click on 'Logout' link
         self.browser.click_link_by_text('Logout')
-        # Check to see if 'Logout' link is visible
-        self.assertEqual(self.browser.is_element_present_by_text('Logout'), False)
-        # Check to see if 'Login' link is visible
-        self.assertEqual(self.browser.is_element_present_by_text('Login'), True)    
+        self.assertEqual(self.browser.url, "http://127.0.0.1:8080/login")   
         
     def testAddEntryNotLoggedIn(self):
         self.test_login_incorrect()
@@ -101,11 +96,6 @@ class TestViews(unittest.TestCase):
         button.click()
         #browser should return to homepage after delete
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/")
-        
-    def test_logout(self):
-        self.test_login_correct()
-        self.browser.click_link_by_text('Logout')
-        self.assertEqual(self.browser.url, "http://127.0.0.1:8080/login")   
         
     def tearDown(self):
         """ Test teardown """
