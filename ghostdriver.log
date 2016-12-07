@@ -1,13 +1,6 @@
-/home/ubuntu/.nvm/versions/node/v4.5.0/lib/node_modules/phantomjs/bin/phantomjs:23
-cp.stdout.pipe(process.stdout)
-         ^
-
-TypeError: Cannot read property 'pipe' of undefined
-    at Object.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.5.0/lib/node_modules/phantomjs/bin/phantomjs:23:10)
-    at Module._compile (module.js:409:26)
-    at Object.Module._extensions..js (module.js:416:10)
-    at Module.load (module.js:343:32)
-    at Function.Module._load (module.js:300:12)
-    at Function.Module.runMain (module.js:441:10)
-    at startup (node.js:139:18)
-    at node.js:974:3
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+[INFO  - 2016-12-07T14:09:36.532Z] GhostDriver - Main - running on port 55978
+[INFO  - 2016-12-07T14:09:37.137Z] Session [c95ccac0-bc86-11e6-b492-8773a1d673ba] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2016-12-07T14:09:37.137Z] Session [c95ccac0-bc86-11e6-b492-8773a1d673ba] - page.customHeaders:  - {}
+[INFO  - 2016-12-07T14:09:37.137Z] Session [c95ccac0-bc86-11e6-b492-8773a1d673ba] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"},"phantomjs.page.settings.loadImages":true}
+[INFO  - 2016-12-07T14:09:37.137Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: c95ccac0-bc86-11e6-b492-8773a1d673ba
