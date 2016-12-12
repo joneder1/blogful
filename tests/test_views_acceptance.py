@@ -17,6 +17,7 @@ class TestViews(unittest.TestCase):
     def setUp(self):
         """ Test setup """
         self.browser = Browser("phantomjs")
+        self.browser.driver.set_window_size(1280, 800)
 
         # Set up the tables in the database
         Base.metadata.create_all(engine)
@@ -48,10 +49,10 @@ class TestViews(unittest.TestCase):
         button.click()
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/login")
         
-    """def test_logout(self):
+    def test_logout(self):
         self.test_login_correct()
         self.browser.find_by_css("button[type=logout]").first.click()
-        self.assertEqual(self.browser.url, "http://127.0.0.1:8080/login")"""  
+        self.assertEqual(self.browser.url, "http://127.0.0.1:8080/login")
         
     def testAddEntryNotLoggedIn(self):
         self.test_login_incorrect()
